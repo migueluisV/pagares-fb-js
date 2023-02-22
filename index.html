@@ -3,32 +3,29 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>JS + Firebase</title>
-
+        <title>Generador de Pagarés</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
         <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-database.js"></script>
         <script src="index.js"></script>
     </head>
     <body onload="read()"> 
         <nav class="navbar navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">JS + Firebase</a>
+            <a class="navbar-brand" href="#">Generador de Pagarés</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Alumnos<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">Pagarés generados<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./consulta.html">Consulta</a>
+                        <a class="nav-link" href="./consulta.html">Consultar</a>
                     </li>
                 </ul>
 
@@ -41,40 +38,53 @@
                     <form action="#">
                         <div class="form-group ">
                             <label for="Input1">Número</label>
-                            <input type="text " class="form-control " id="Input1" placeholder="Num. de control">
+                            <input type="text " class="form-control " id="Input1" placeholder="Num. de Pagaré" />
                         </div>
                         <div class="form-group">
-                            <label for="Input2">De</label>
-                            <input type="text" class="form-control" id="Input2" placeholder="Nombre">
+                            <label for="Input2">Deudor</label>
+                            <input type="text" class="form-control" id="Input2" placeholder="Nombre de deudor" />
                         </div>
                         <div class="form-group">
-                            <label for="Input3">Correo electrónico</label>
-                            <input type="email" class="form-control" id="Input3" aria-describedby="emailHelp" placeholder="Enter email">
+                            <label for="Input3">Acredor</label>
+                            <input type="text" class="form-control" id="Input3" placeholder="Nombre de acredor" />
                         </div>
-                        <div class="form-group ">
-                            <label for="Input4">Carrera</label>
-                            <select class="form-control " id="Input4">
-                                <option value="selecciona">selecciona</option>
-                                <option value="Informatica">Informatica</option>
-                                <option value="Sistemas">Sistemas</option>
-                                <option value="TICS">TICS</option>
+                        <div class="form-group">
+                            <label for="Input4">Monto</label>
+                            <input type="text" class="form-control" id="Input4" placeholder="Cantidad a pagar" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Input5">Moneda</label>
+                            <select class="form-control " id="Input5">
+                                <option value="Selecciona">Selecciona...</option>
+                                <option value="MXN">MXN</option>
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Input6">Fecha de emisión</label>
+                            <input type="date" class="form-control" id="Input6" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Input7">Fecha de vencimiento</label>
+                            <input type="date" class="form-control" id="Input7" />
                         </div>
                         <button type="submit " class="btn btn-primary" onclick="createR()">Enviar</button>
                         <button type="reset " class="btn btn-secondary" onclick="resetFields()">Limpiar</button>
                     </form>
                 </div>
                 <div class="col-md-8">
-                    <h3 style="text-align:center">Lista de Alumnos</h3>
+                    <h3 style="text-align:center">Lista de Pagarés</h3>
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Matrícula</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Correo</th>
-                                <th scope="col">Carrera</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
+                                <th scope="col">Número</th>
+                                <th scope="col">Deudor</th>
+                                <th scope="col">Acredor</th>
+                                <th scope="col">Monto</th>
+                                <th scope="col">Moneda</th>
+                                <th scope="col">Fecha de emisión</th>
+                                <th scope="col">Fecha de vencimiento</th>
                             </tr>
                         </thead>
                         <tbody id='Table1'></tbody>

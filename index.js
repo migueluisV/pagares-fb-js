@@ -1,52 +1,70 @@
+// Llave para acceder a la base de datos de Firebase.
 const firebaseConfig = {
-    apiKey: "AIzaSyCcoBnoZTZ3VFTYNIeltzPUm63dX3oiSXo",
-    authDomain: "p222-ecb44.firebaseapp.com",
-    databaseURL: "https://p222-ecb44-default-rtdb.firebaseio.com",
-    projectId: "p222-ecb44",
-    storageBucket: "p222-ecb44.appspot.com",
-    messagingSenderId: "979243302550",
-    appId: "1:979243302550:web:7114a3e963bc8c1fc00cb7",
-    measurementId: "G-GQ03PS6NZ7"
-  };
-// Initialize Firebase
+    apiKey: "AIzaSyCjMJAPH6Sl4YzUA64Mk98rT97WN6Y9CBc",
+    authDomain: "fb-js-3dd39.firebaseapp.com",
+    databaseURL: "https://fb-js-3dd39-default-rtdb.firebaseio.com",
+    projectId: "fb-js-3dd39",
+    storageBucket: "fb-js-3dd39.appspot.com",
+    messagingSenderId: "614371651593",
+    appId: "1:614371651593:web:0daca538c80512d2de08d8",
+    measurementId: "G-WK2Y3QB4J7"
+};
+// Inicializa Firebase.
 firebase.initializeApp(firebaseConfig);
 
-
-function resetFields(){
-    document.getElementById("Input1").value='';
-    document.getElementById("Input2").value='';
-    document.getElementById("Input3").value='';
-    document.getElementById("Input4").value='selecciona';
+// Restablece los controles del formulario.
+function resetFields() {
+    document.getElementById("Input1").value = "";
+    document.getElementById("Input2").value = "";
+    document.getElementById("Input3").value = "";
+    document.getElementById("Input4").value = "";
+    document.getElementById("Input5").value = "Selecciona...";
+    document.getElementById("Input6").value = "";
+    document.getElementById("Input7").value = "";
 }
-function createR() {
-    document.getElementById("Input1").disabled = false;
-    //Guardo los datos capturados usando el id de cada control
-    var id = document.getElementById("Input1").value;
-    var nombre = document.getElementById("Input2").value;
-    var correo = document.getElementById("Input3").value;
-    var carrera = document.getElementById("Input4").value;
 
-    //validaciones
-    if (id.length > 0) {
-        //creo un objeto que guarda los datos
-        var alumno = {
-            id, //matricula:id
-            nombre,
-            correo,
-            carrera,
+// Crea un registro para la base de datos.
+function createR() {
+    // Habilita el control con Id "Input1".
+    document.getElementById("Input1").disabled = false;
+
+    //Guardo los datos capturados usando el Id de cada control.
+    const num = document.getElementById("Input1").value;
+    const deudor = document.getElementById("Input2").value;
+    const acredor = document.getElementById("Input3").value;
+    const monto = document.getElementById("Input4").value;
+    const moneda = document.getElementById("Input5").value;
+    const fecha_e = document.getElementById("Input6").value;
+    const fecha_v = document.getElementById("Input7").value;
+
+    // Validación de que las variables tienen contenido.
+    if (num.length > 0 && deudor.length > 0 && acredor.length > 0 &&
+        monto.length > 0 && fecha_e.length > 0 && fecha_v.length > 0
+        && moneda != "Selecciona") {
+        // Crea un JSON que contiene las variables anteriores y las
+        // manda a la base de datos.
+        var pagare = {
+            num, // Id.
+            deudor,
+            acredor,
+            monto,
+            moneda,
+            fecha_e,
+            fecha_v
         }
 
         //console.log(alumno);
 
-        firebase.database().ref('Alumnos/' + id).update(alumno).then(() => {
+        // Envia el objeto JSON a la tabla "Pagare" con Id "num".
+        firebase.database().ref("Pagare/" + num).update(pagare).then(() => {
+            // Termina la operación y llama a "resetFields()".
            resetFields();
         }).then(()=>{
+            // Termina la operación y llama a "read()".
            read();
         });
 
         swal("Listo!", "Agregado correctamente", "success");
-
-        
     } 
     else {
         swal("Error", "Llena todos los campos","warning");
@@ -70,10 +88,12 @@ function createR() {
     //})
 }
 
-function read(){
+// Lee los registros de la base de datos.
+function read() {
+    // Limpia el contenido del contenedor con Id "Table1".
     document.getElementById("Table1").innerHTML='';
 
-    var ref = firebase.database().ref('Alumnos');
+    const ref = firebase.database().ref("Pagare");
 /**   
    ref.on('value', function(snapshot) {
         snapshot.forEach(row=>{
@@ -82,63 +102,82 @@ function read(){
     });
  */
    
+    // Recibe registro a registro y llama a "printRow(pagare)".
     ref.on("child_added", function(snapshot) {
         printRow(snapshot.val());
     });
 
 }
 
-function printRow(alumno){
-    
-    if(alumno!=null){
-        var table = document.getElementById("Table1"); 
+// Imprime registros de una tabla de la base de datos.
+function printRow(pagare) {
+    if (pagare != null) {
+        let table = document.getElementById("Table1"); 
 
-        //creamos un nuevo elemento en la tabla en la ultima posicion
-        var row = table.insertRow(-1);
+        // Crea un nuevo elemento en la tabla en la ultima posición.
+        let row = table.insertRow(-1);
 
-        //Insertamos cada una de las celdas/columnas del registro
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-        var cell6 = row.insertCell(5);
+        // Inserta cada una de las celdas/columnas del registro.
+        let cell1 = row.insertCell(0);
+        let cell2 = row.insertCell(1);
+        let cell3 = row.insertCell(2);
+        let cell4 = row.insertCell(3);
+        let cell5 = row.insertCell(4);
+        let cell6 = row.insertCell(5);
+        let cell7 = row.insertCell(6);
+        let cell8 = row.insertCell(7);
+        let cell9 = row.insertCell(8);
         
-        //Agregamos la informacion a cada una de las columnas del registro
-        cell1.innerHTML = alumno.id;
-        cell2.innerHTML = alumno.nombre; 
-        cell3.innerHTML = alumno.correo;
-        cell4.innerHTML = alumno.carrera; 
-        cell5.innerHTML = `<button type="button" class="btn btn-danger" onClick="deleteR(${alumno.id})">Eliminar</button>`;
-        cell6.innerHTML = '<button type="button" class="btn btn-success" onClick="seekR('+alumno.id+')">Modificar</button>';
+        // Agrega la información a cada una de las columnas del registro.
+        cell1.innerHTML = pagare.num;
+        cell2.innerHTML = pagare.deudor; 
+        cell3.innerHTML = pagare.acredor;
+        cell4.innerHTML = pagare.monto;
+        cell5.innerHTML = pagare.moneda;
+        cell6.innerHTML = pagare.fecha_e;
+        cell7.innerHTML = pagare.fecha_v;
+        // Agrega botones con funciones para eliminar y modificar los registros recién insertados.
+        cell8.innerHTML = `<button type="button" class="btn btn-danger" onClick="deleteR(${pagare.num})">Eliminar</button>`;
+        cell9.innerHTML = '<button type="button" class="btn btn-success" onClick="seekR(' + pagare.num + ')">Modificar</button>';
     }
 }
 
-function deleteR(id){
-    firebase.database().ref('Alumnos/' + id).set(null).then(() => {
+// Elimina un registro seleccionado.
+function deleteR(num) {
+    firebase.database().ref('Pagare/' + num).set(null).then(() => {
       read();
     }).then(()=>{
        swal("Listo!", "Eliminado correctamente", "success");
     });
 }
 
-function seekR(id){
-    var ref = firebase.database().ref('Alumnos/' + id);
+// Modifica un registro seleccionado.
+function seekR(num) {
+    const ref = firebase.database().ref('Pagare/' + num);
     ref.on('value', function(snapshot) {
       updateR(snapshot.val());
     });
 }
 
-function updateR(alumno){
-    if(alumno!=null)
-    {
-        document.getElementById("Input1").value=alumno.id;
+// Actualiza los datos de un registro.
+function updateR(pagare) {
+    if (pagare != null) {
+        // Escribe los valores del JSON en los controles del formulario.
         document.getElementById("Input1").disabled = true;
-        document.getElementById("Input2").value=alumno.nombre;
-        document.getElementById("Input3").value=alumno.correo;
-        document.getElementById("Input4").value=alumno.carrera;
+        document.getElementById("Input1").value = pagare.num;
+        document.getElementById("Input2").value = pagare.deudor;
+        document.getElementById("Input3").value = pagare.acredor;
+        document.getElementById("Input4").value = pagare.monto;
+        document.getElementById("Input5").value = pagare.moneda;
+        document.getElementById("Input6").value = pagare.fecha_e;
+        document.getElementById("Input7").value = pagare.fecha_v;
     }
 }
+
+
+
+
+// faltan estas dos funciones para actualizar a nuestro trabajo.
 
 
 //Para consulta de carrera
@@ -146,7 +185,7 @@ function readQ(){
     document.getElementById("Table2").innerHTML='';
     var c = document.getElementById("Input5").value;
 
-    var ref = firebase.database().ref("Alumnos");
+    var ref = firebase.database().ref("Pagare");
     ref.orderByChild("carrera").equalTo(c).on("child_added", function(snapshot) {
         printRowQ(snapshot.val());
     });
