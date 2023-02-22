@@ -27,7 +27,7 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="./index.html">Alumnos<span class="sr-only">Alumnos</span></a>
+                    <a class="nav-link" href="./index.html">Adeudores<span class="sr-only">Adeudores</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Consulta<span class="sr-only">(current)</span></a>
@@ -41,26 +41,31 @@
         <div class="row">
             
             <div class="form-group">
-                <label for="Input5">Carrera</label>
-                <select class="form-control " id="Input5"  onchange="readQ()">
-                    <option value="selecciona">selecciona</option>
-                    <option value="Informatica">Informatica</option>
-                    <option value="Sistemas">Sistemas</option>
-                    <option value="TICS">TICS</option>
+                <label for="Input12">Tipo de moneda en la cual se pago el Pagare</label>
+                <select class="form-control " id="Input12"  onchange="readQ()">
+                    <option value="Selecciona">Selecciona..</option>
+                    <option value="MXN">MXN</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
                 </select>
             </div>  
             <div class="col-md-12">
-                <h3 style="text-align:center">Alumnos</h3>
+                <h3 style="text-align:center">Adeudores</h3>
 
                 <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">Matrícula</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Carrera</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                                <th scope="col">Número</th>
+                                <th scope="col">Nombre del Deudor</th>
+                                <th scope="col">Dirección del Deudor</th>
+                                <th scope="col">Población del Deudor</th>
+                                <th scope="col">Acredor</th>
+                                <th scope="col">Monto</th>
+                                <th scope="col">Moneda</th>
+                                <th scope="col">Interes</th>
+                                <th scope="col">Ciudad de emisión</th>
+                                <th scope="col">Fecha de emisión</th>
+                                <th scope="col">Fecha de vencimiento</th>
                       </tr>
                     </thead>
                     <tbody id='Table2'>

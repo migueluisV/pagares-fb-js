@@ -210,20 +210,20 @@ function updateR(pagare) {
 // faltan estas dos funciones para actualizar a nuestro trabajo.
 
 
-//Para consulta de carrera
+//Para consulta el tipo de moneda de los cuales se pagaron el pagare
 function readQ(){
     document.getElementById("Table2").innerHTML='';
-    var c = document.getElementById("Input5").value;
+    var c = document.getElementById("Input12").value;
 
     var ref = firebase.database().ref("Pagare");
-    ref.orderByChild("carrera").equalTo(c).on("child_added", function(snapshot) {
+    ref.orderByChild("moneda").equalTo(c).on("child_added", function(snapshot) {
         printRowQ(snapshot.val());
     });
 
 }
 
 
-function printRowQ(alumno){
+function printRowQ(pagare){
 
     var table = document.getElementById("Table2"); 
     
@@ -235,11 +235,28 @@ function printRowQ(alumno){
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
     var cell4 = row.insertCell(3);
-    
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+    var cell8 = row.insertCell(7);
+    var cell9 = row.insertCell(8);
+    var cell10 = row.insertCell(9);
+    var cell11 = row.insertCell(10);
+
     //Agregamos la informacion a cada una de las columnas del registro
-    cell1.innerHTML = alumno.id;
-    cell2.innerHTML = alumno.nombre; 
-    cell3.innerHTML = alumno.correo;
-    cell4.innerHTML = alumno.carrera; 
-   
+    cell1.innerHTML = pagare.num;
+    cell2.innerHTML = pagare.deudor_nom;
+    cell3.innerHTML = pagare.deudor_dir;
+    cell4.innerHTML = pagare.deudor_pob;
+    cell5.innerHTML = pagare.acredor;
+    cell6.innerHTML = pagare.monto;
+    cell7.innerHTML = pagare.moneda;
+    cell8.innerHTML = pagare.interes;
+    cell9.innerHTML = pagare.ciudad;
+    cell10.innerHTML = pagare.fecha_e;
+    cell11.innerHTML = pagare.fecha_v;
+
+ 
+
 }
+   
