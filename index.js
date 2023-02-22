@@ -20,10 +20,11 @@ function resetFields() {
     document.getElementById("Input4").value = "";
     document.getElementById("Input5").value = "";
     document.getElementById("Input6").value = "";
-    document.getElementById("Input7").value = "";
+    document.getElementById("Input7").value = "Selecciona";
     document.getElementById("Input8").value = "";
     document.getElementById("Input9").value = "";
     document.getElementById("Input10").value = "";
+    document.getElementById("Input11`").value = "";
 }
 
 // Crea un registro para la base de datos.
@@ -38,62 +39,54 @@ function createR() {
     const deudor_pob = document.getElementById("Input4").value;
     const acredor = document.getElementById("Input5").value;
     const monto = document.getElementById("Input6").value;
-    const interes = document.getElementById("Input7").value;
-    const ciudad = document.getElementById("Input8").value;
-    const fecha_e = document.getElementById("Input9").value;
-    const fecha_v = document.getElementById("Input10").value;
+    const moneda = document.getElementById("Input7").value;
+    const interes = document.getElementById("Input8").value;
+    const ciudad = document.getElementById("Input9").value;
+    const fecha_e = document.getElementById("Input10").value;
+    const fecha_v = document.getElementById("Input11").value;
 
     // Validación de que las variables tienen contenido.
     if (num.length > 0 && deudor_nom.length > 0 && deudor_dir.length > 0 &&
         deudor_pob.length > 0 && acredor.length > 0 && monto.length > 0 &&
-        interes.length > 0 && ciudad.length > 0 && fecha_e.length > 0 &&
-        fecha_v.length > 0) {
-        // Crea un JSON que contiene las variables anteriores y las
-        // manda a la base de datos.
-        var pagare = {
-            num, // Id.
-            deudor_nom,
-            deudor_dir,
-            deudor_pob,
-            acredor,
-            monto,
-            interes,
-            ciudad,
-            fecha_e,
-            fecha_v
+        moneda != "Selecciona" && interes.length > 0 && ciudad.length > 0 &&
+        fecha_e.length > 0 && fecha_v.length > 0) {
+        if (!isNaN(num) && !isNaN(monto)) {
+            // Crea un JSON que contiene las variables anteriores y las
+            // manda a la base de datos.
+            var pagare = {
+                num, // Id.
+                deudor_nom,
+                deudor_dir,
+                deudor_pob,
+                acredor,
+                monto,
+                moneda,
+                interes,
+                ciudad,
+                fecha_e,
+                fecha_v
+            }
+
+            // Envia el objeto JSON a la tabla "Pagare" con Id "num".
+            firebase.database().ref("Pagare/" + num).update(pagare).then(() => {
+                // Termina la operación y llama a "resetFields()".
+            resetFields();
+            }).then(()=>{
+                // Termina la operación y llama a "read()".
+            read();
+            });
+
+            swal("Listo!", "Agregado correctamente", "success");
         }
-
-        // Envia el objeto JSON a la tabla "Pagare" con Id "num".
-        firebase.database().ref("Pagare/" + num).update(pagare).then(() => {
-            // Termina la operación y llama a "resetFields()".
-           resetFields();
-        }).then(()=>{
-            // Termina la operación y llama a "read()".
-           read();
-        });
-
-        swal("Listo!", "Agregado correctamente", "success");
+        else {
+            swal("Error", "El tipo de dato es incorrecto","warning");
+        }
     } 
     else {
         swal("Error", "Llena todos los campos","warning");
     }
 
     document.getElementById("Input1").disabled = false;
-        //firebase.database().ref('users/' + userId).set({
-    //    username: name,
-    //    email: email,
-    //    profile_picture : imageUrl
-    //  });
-    //https://firebase.google.com/docs/database/web/read-and-write?hl=es
-
-  
-    //Esto se usa cuando no tienen un id/matricula y Firebase les genera una
-    //automaticamente
-    //const key = firebase.database().ref().child('Alumnos').push().key;
-    //data[`Alumnos/${key}`]= alumno;
-    //firebase.database().ref().update(data).then(()=>{
-    //  alert('Agregado exitosamente');
-    //})
 }
 
 // Lee los registros de la base de datos.
@@ -102,13 +95,6 @@ function read() {
     document.getElementById("Table1").innerHTML='';
 
     const ref = firebase.database().ref("Pagare");
-/**   
-   ref.on('value', function(snapshot) {
-        snapshot.forEach(row=>{
-            printRow(row.val());
-        })
-    });
- */
    
     // Recibe registro a registro y llama a "printRow(pagare)".
     ref.on("child_added", function(snapshot) {
@@ -139,6 +125,7 @@ function printRow(pagare) {
         let cell11 = row.insertCell(10);
         let cell12 = row.insertCell(11);
         let cell13 = row.insertCell(12);
+        let cell14 = row.insertCell(13);
         
         // Agrega la información a cada una de las columnas del registro.
         cell1.innerHTML = pagare.num;
@@ -147,14 +134,15 @@ function printRow(pagare) {
         cell4.innerHTML = pagare.deudor_pob;
         cell5.innerHTML = pagare.acredor;
         cell6.innerHTML = pagare.monto;
-        cell7.innerHTML = pagare.interes;
-        cell8.innerHTML = pagare.ciudad;
-        cell9.innerHTML = pagare.fecha_e;
-        cell10.innerHTML = pagare.fecha_v;
+        cell7.innerHTML = pagare.moneda;
+        cell8.innerHTML = pagare.interes;
+        cell9.innerHTML = pagare.ciudad;
+        cell10.innerHTML = pagare.fecha_e;
+        cell11.innerHTML = pagare.fecha_v;
         // Agrega botones con funciones para eliminar y modificar los registros recién insertados.
-        cell11.innerHTML = `<button type="button" class="btn btn-danger" onClick="deleteR(${pagare.num})">Eliminar</button>`;
-        cell12.innerHTML = `<button type="button" class="btn btn-success" onClick="seekR(${pagare.num})">Modificar</button>`;
-        cell13.innerHTML = `<button type="button" class="btn btn-success" onClick="redirect(${pagare.num})">Generar</button>`;
+        cell12.innerHTML = `<button type="button" class="btn btn-danger" onClick="deleteR(${pagare.num})">Eliminar</button>`;
+        cell13.innerHTML = `<button type="button" class="btn btn-success" onClick="seekR(${pagare.num})">Modificar</button>`;
+        cell14.innerHTML = `<button type="button" class="btn btn-success" onClick="redirect(${pagare.num})">Generar</button>`;
     }
 }
 
@@ -191,18 +179,13 @@ function updateR(pagare) {
         document.getElementById("Input4").value = pagare.deudor_pob;
         document.getElementById("Input5").value = pagare.acredor;
         document.getElementById("Input6").value = pagare.monto;
-        document.getElementById("Input7").value = pagare.interes;
-        document.getElementById("Input8").value = pagare.ciudad;
-        document.getElementById("Input9").value = pagare.fecha_e;
-        document.getElementById("Input10").value = pagare.fecha_v;
+        document.getElementById("Input7").value = pagare.monto;
+        document.getElementById("Input8").value = pagare.interes;
+        document.getElementById("Input9").value = pagare.ciudad;
+        document.getElementById("Input10").value = pagare.fecha_e;
+        document.getElementById("Input11").value = pagare.fecha_v;
     }
 }
-
-
-
-
-// faltan estas dos funciones para actualizar a nuestro trabajo.
-
 
 //Para consulta el tipo de moneda de los cuales se pagaron el pagare
 function readQ(){
@@ -216,9 +199,7 @@ function readQ(){
 
 }
 
-
 function printRowQ(pagare){
-
     var table = document.getElementById("Table2"); 
     
     //creamos un nuevo elemento en la tabla en la ultima posicion
@@ -249,8 +230,4 @@ function printRowQ(pagare){
     cell9.innerHTML = pagare.ciudad;
     cell10.innerHTML = pagare.fecha_e;
     cell11.innerHTML = pagare.fecha_v;
-
- 
-
 }
-   

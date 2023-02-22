@@ -1,3 +1,6 @@
+La practica de esta semana consiste en utilizar JavaScript puro en conjunto con Firebase, para la inserción, modificación, eliminación y consulta de registros en la base de datos que te permite crear este servicio, la plantilla base del sitio web fue clona del repositorio de nuestra maestra y nosotros lo adecuamos a la funcionalidad que decidioms: un generador de Pagarés.
+
+
 Las herramientas utilizadas fueron:
 
 
@@ -13,7 +16,7 @@ Las herramientas utilizadas fueron:
 Esta aplicación se conecta a Firebase, servicio de Google el cual maneja distintas aplicaciones, servicios y bases de datos No Sql. Una vez conectado el usuario puede ingresar algunos datos necesarios para la generación de su Pagaré, estos datos son enviados a la base de datos y presentados en una tabla adicional en la misma pantalla donde fueron ingresados; al lado de cada registro aparecen botones para realizar las operaciones de **Modificación**, **Eliminación** y **Generación** del Pagaré.
 
 
-En la parte superior de la página, podemos dar clic a un botón para poder acceder a una opción adicional, la cual permite buscar algún registro en la base de datos.
+En la parte superior de la página, podemos dar clic a un botón para poder acceder a una opción adicional, la cual permite buscar algún registro en la base de datos según el tipo de moneda por el cual fue creado el registro del pagaré, y mostrado nuevamente en una tabla para mayor orden.
 
 
 El botón *Generar* redirecciona a otra página la cual muestra el Pagaré en si, el cual puede ser copiado para presentarlo en otro documento y darle el formato deseado.
