@@ -1,13 +1,6 @@
 // Llave para acceder a la base de datos de Firebase.
 const firebaseConfig = {
-    apiKey: "AIzaSyAuBqdYyG1TEOF_bmH4h_Tf8EXjIeNIUH0",
-    authDomain: "pagare-75096.firebaseapp.com",
-    databaseURL: "https://pagare-75096-default-rtdb.firebaseio.com",
-    projectId: "pagare-75096",
-    storageBucket: "pagare-75096.appspot.com",
-    messagingSenderId: "389616617384",
-    appId: "1:389616617384:web:7609415e65078a2dadff9d",
-    measurementId: "G-8C8GXPS4T8"
+    //
 };
 // Inicializa Firebase.
 firebase.initializeApp(firebaseConfig);
