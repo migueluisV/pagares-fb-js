@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pagaré generado</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Generador de Pagarés</a>
+            
+        </nav>
+        <!-- Contenedor que recibirá el contenido del script -->
+        <div id="contenedor"></div>
+        <!-- Enlaza el script a este documento. -->
+        <script>
+            //`No. ${num}.\nBueno por ${monto}${moneda}.\nEn ${ciudad} a ${fecha_e}.\n\n\nDebe(mos) y pagare(mos) incondicionalmente por este Pagaré a la orden de ${acredor} en ${ciudad} el ${fecha_v} la cantidad de ${monto} ${moneda}.\n\n\nValor recibido a mi (nuestra) entera satisfacción. Este pagaré forma parte de una serie numerada y todos están suetos a la condición de que, al no pagarse cualquiera de ellos a su vencimiento, serán exigibles todos los que le sigan en número, además de los que ya vencieron, desde la fecha de vencimiento de este documento asta el día de su liquidación, causará intereses monatorios al tipo de ${interes}% mensual, pagadero en esta ciudad juntamente con el principal\n\n\nNombre y datos de deudor\nNombre\t${deudor_nom}\nDirección\t${deudor_dir}\nPoblación\t${deudor_pob}`;
+
+            /*
+            Variables:
+            1.num: número del pagaré.
+            2.deudor_nom: nombre del deudor.
+            3.deudor_dir: dirección del deudor.
+            4.deudor_pob: población donde habita el deudor.
+            5.acredor: nombre del acredor.
+            6.ciudad: ciudad donde se emitió el pagaré.
+            7.monto: cantidad a pagar en el pagaré.
+            8.moneda: moneda en la que está evaluada la deuda a pagar.
+            9.interes: porcentaje de interés por cada mes de pago retrasado.
+            10.fecha_e: fecha de emitió el pagaré.
+            11.fecha_v: fecha de vencimiento del pagaré.
+            */
+
+
+            // Obtiene los parámetros posteriores al carácter "?" en la URL del sitio web.
+            const getURL = new URLSearchParams(window.location.search);
+            // Obtiene el parámetro "num" de la URL.
+            const num = getURL.get("num");
+
+            console.log(num);
+        </script>
+    </body>
+</html>
