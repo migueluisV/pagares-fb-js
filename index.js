@@ -20,11 +20,10 @@ function resetFields() {
     document.getElementById("Input4").value = "";
     document.getElementById("Input5").value = "";
     document.getElementById("Input6").value = "";
-    document.getElementById("Input7").value = "Selecciona...";
+    document.getElementById("Input7").value = "";
     document.getElementById("Input8").value = "";
     document.getElementById("Input9").value = "";
     document.getElementById("Input10").value = "";
-    document.getElementById("Input11").value = "";
 }
 
 // Crea un registro para la base de datos.
@@ -39,17 +38,16 @@ function createR() {
     const deudor_pob = document.getElementById("Input4").value;
     const acredor = document.getElementById("Input5").value;
     const monto = document.getElementById("Input6").value;
-    const moneda = document.getElementById("Input7").value;
-    const interes = document.getElementById("Input8").value;
-    const ciudad = document.getElementById("Input9").value;
-    const fecha_e = document.getElementById("Input10").value;
-    const fecha_v = document.getElementById("Input11").value;
+    const interes = document.getElementById("Input7").value;
+    const ciudad = document.getElementById("Input8").value;
+    const fecha_e = document.getElementById("Input9").value;
+    const fecha_v = document.getElementById("Input10").value;
 
     // Validación de que las variables tienen contenido.
     if (num.length > 0 && deudor_nom.length > 0 && deudor_dir.length > 0 &&
         deudor_pob.length > 0 && acredor.length > 0 && monto.length > 0 &&
-        moneda != "Selecciona" && interes.length > 0 && ciudad.length > 0 &&
-        fecha_e.length > 0 && fecha_v.length > 0) {
+        interes.length > 0 && ciudad.length > 0 && fecha_e.length > 0 &&
+        fecha_v.length > 0) {
         // Crea un JSON que contiene las variables anteriores y las
         // manda a la base de datos.
         var pagare = {
@@ -59,7 +57,6 @@ function createR() {
             deudor_pob,
             acredor,
             monto,
-            moneda,
             interes,
             ciudad,
             fecha_e,
@@ -142,7 +139,6 @@ function printRow(pagare) {
         let cell11 = row.insertCell(10);
         let cell12 = row.insertCell(11);
         let cell13 = row.insertCell(12);
-        let cell14 = row.insertCell(13);
         
         // Agrega la información a cada una de las columnas del registro.
         cell1.innerHTML = pagare.num;
@@ -151,20 +147,19 @@ function printRow(pagare) {
         cell4.innerHTML = pagare.deudor_pob;
         cell5.innerHTML = pagare.acredor;
         cell6.innerHTML = pagare.monto;
-        cell7.innerHTML = pagare.moneda;
-        cell8.innerHTML = pagare.interes;
-        cell9.innerHTML = pagare.ciudad;
-        cell10.innerHTML = pagare.fecha_e;
-        cell11.innerHTML = pagare.fecha_v;
+        cell7.innerHTML = pagare.interes;
+        cell8.innerHTML = pagare.ciudad;
+        cell9.innerHTML = pagare.fecha_e;
+        cell10.innerHTML = pagare.fecha_v;
         // Agrega botones con funciones para eliminar y modificar los registros recién insertados.
-        cell12.innerHTML = `<button type="button" class="btn btn-danger" onClick="deleteR(${pagare.num})">Eliminar</button>`;
-        cell13.innerHTML = `<button type="button" class="btn btn-success" onClick="seekR(${pagare.num})">Modificar</button>`;
-        cell14.innerHTML = `<button type="button" class="btn btn-success" onClick="generate(${pagare.num})">Generar</button>`;
+        cell11.innerHTML = `<button type="button" class="btn btn-danger" onClick="deleteR(${pagare.num})">Eliminar</button>`;
+        cell12.innerHTML = `<button type="button" class="btn btn-success" onClick="seekR(${pagare.num})">Modificar</button>`;
+        cell13.innerHTML = `<button type="button" class="btn btn-success" onClick="redirect(${pagare.num})">Generar</button>`;
     }
 }
 
 // Redirecciona a "pagare.html" para generar el Pagaré del registro.
-function generate(num) {
+function redirect(num) {
     window.location.href = `pagare.html?num=${num}`;
 }
 
@@ -196,11 +191,10 @@ function updateR(pagare) {
         document.getElementById("Input4").value = pagare.deudor_pob;
         document.getElementById("Input5").value = pagare.acredor;
         document.getElementById("Input6").value = pagare.monto;
-        document.getElementById("Input7").value = pagare.moneda;
-        document.getElementById("Input8").value = pagare.interes;
-        document.getElementById("Input9").value = pagare.ciudad;
-        document.getElementById("Input10").value = pagare.fecha_e;
-        document.getElementById("Input11").value = pagare.fecha_v;
+        document.getElementById("Input7").value = pagare.interes;
+        document.getElementById("Input8").value = pagare.ciudad;
+        document.getElementById("Input9").value = pagare.fecha_e;
+        document.getElementById("Input10").value = pagare.fecha_v;
     }
 }
 

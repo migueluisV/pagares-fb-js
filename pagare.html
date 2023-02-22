@@ -5,14 +5,18 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pagaré generado</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-database.js"></script>
         <script src="index.js"></script>
     </head>
-    <body>
+    <body onload="generate()">
         <nav class="navbar navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Generador de Pagarés</a>
-            
+            <a class="navbar-brand" href="index.html">Generador de Pagarés</a>
         </nav>
+        <h3>Pagaré generado</h3>
+        <hr/>
+        <br/>
         <!-- Contenedor que recibirá el contenido del script -->
         <div id="contenedor"></div>
         <!-- Enlaza el script a este documento. -->
@@ -40,7 +44,27 @@
             // Obtiene el parámetro "num" de la URL.
             const num = getURL.get("num");
 
-            console.log(num);
+            const aplicacion = document.querySelector("#contenedor");
+            const pre = document.createElement("pre");
+
+            function generate() {
+                const ref = firebase.database().ref('Pagare/' + num);
+                ref.on('value', function(snapshot) {
+                    const pagare = `No. ${num}.\nBueno por ${snapshot.val().monto} pesos.\nEn ${snapshot.val().ciudad}, a ${snapshot.val().fecha_e}.\n\nDebe(mos) y pagare(mos) incondicionalmente por este Pagaré a la orden de ${snapshot.val().acredor}, en ${snapshot.val().ciudad}, el ${snapshot.val().fecha_v}, la cantidad de ${snapshot.val().monto} pesos.\n\nValor recibido a mi (nuestra) entera satisfacción. Este pagaré forma parte de una serie numerada y todos están suetos a la condición de que, al no\npagarse cualquiera de ellos a su vencimiento, serán exigibles todos los que le sigan en número, además de los que ya vencieron, desde la fecha de\nvencimiento de este documento asta el día de su liquidación, causará intereses monatorios al tipo de ${snapshot.val().interes}% mensual, pagadero en esta ciudad juntamente con el principal.\n\nNombre y datos de deudor\nNombre\t\t${snapshot.val().deudor_nom}\nDirección\t${snapshot.val().deudor_dir}\nPoblación\t${snapshot.val().deudor_pob}`;
+                    pre.textContent = pagare;
+                    aplicacion.appendChild(pre);
+                });
+            }
+
+            // function deploy(pagare) {
+            //     console.log(pagare.num);
+            // }
+
+            // function generate() {
+            //     const pagare = `No. ${num}.\nBueno por ${monto}${moneda}.\nEn ${ciudad} a ${fecha_e}.\n\n\nDebe(mos) y pagare(mos) incondicionalmente por este Pagaré a la orden de ${acredor} en ${ciudad} el ${fecha_v} la cantidad de ${monto} ${moneda}.\n\n\nValor recibido a mi (nuestra) entera satisfacción. Este pagaré forma parte de una serie numerada y todos están suetos a la condición de que, al no pagarse cualquiera de ellos a su vencimiento, serán exigibles todos los que le sigan en número, además de los que ya vencieron, desde la fecha de vencimiento de este documento asta el día de su liquidación, causará intereses monatorios al tipo de ${interes}% mensual, pagadero en esta ciudad juntamente con el principal\n\n\nNombre y datos de deudor\nNombre\t${deudor_nom}\nDirección\t${deudor_dir}\nPoblación\t${deudor_pob}`;
+            //     pre.textContent = pagare;
+            //     aplicacion.appendChild(pre);
+            // }
         </script>
     </body>
 </html>
